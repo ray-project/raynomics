@@ -6,8 +6,6 @@ import warnings
 import raynomics.sparse
 import raynomics.sparse.mvp
 
-from numpy.testing import assert_equal, assert_almost_equal
-
 # Matrix-vector product wrapper
 # A is a numpy 2d array or matrix, or a scipy matrix or sparse matrix.
 # x is a numpy vector only.
@@ -97,8 +95,6 @@ def irlb(A,n,num_workers,tol=0.0001,maxit=50):
   while(it < maxit):
     if(it>0): j=k
     W[:,j] = raynomics.sparse.mvp.mvp(A_ids,V[:,j])
-    vvv = mult(A,V[:,j])
-    assert_almost_equal(vvv, W[:,j])
     mprod+=1
     if(it>0):
       W[:,j] = orthog(W[:,j],W[:,0:j]) # NB W[:,0:j] selects columns 0,1,...,j-1
@@ -108,8 +104,6 @@ def irlb(A,n,num_workers,tol=0.0001,maxit=50):
     # Lanczos process
     while(j<m_b):
       F = raynomics.sparse.mvp.mvp(At_ids,W[:,j])
-      G = mult(A,W[:,j],t=True)
-      assert_almost_equal(F, G)
       mprod+=1
       F = F - s*V[:,j]
       F = orthog(F,V[:,0:j+1])
@@ -121,8 +115,6 @@ def irlb(A,n,num_workers,tol=0.0001,maxit=50):
         B[j,j] = s
         B[j,j+1] = fn 
         W[:,j+1] = raynomics.sparse.mvp.mvp(A_ids,V[:,j+1])
-        xxx = mult(A,V[:,j+1])
-        assert_almost_equal(W[:,j+1], xxx)
         mprod+=1
         # One step of classical Gram-Schmidt...
         W[:,j+1] = W[:,j+1] - fn*W[:,j]
