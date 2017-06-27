@@ -3,9 +3,6 @@ import numpy as np
 import scipy
 import scipy.sparse
 
-ray.register_class(scipy.sparse.csr.csr_matrix)
-ray.register_class(scipy.sparse.csc.csc_matrix)
-
 # Code for sparse matrix vector products
 
 def partition_matrix_rows(A, num_partitions):
