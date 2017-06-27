@@ -19,7 +19,7 @@ class SparseMVPTest(unittest.TestCase):
   def testMVP(self):
     # reloading is only neccessary in the test because we call ray.init twice
     reload(raynomics.sparse.mvp)
-    ray.init(start_ray_local=True, num_workers=16)
+    ray.init(num_workers=8)
 
     # Test a matrix-vector-product
     m = 5001
@@ -49,7 +49,7 @@ class SparseIRLBTest(unittest.TestCase):
     # reloading is only neccessary in the test because we call ray.init twice
     reload(raynomics.sparse.irlb)
     reload(raynomics.sparse.mvp)
-    ray.init(start_ray_local=True, num_workers=16)
+    ray.init(num_workers=8)
  
     m = 10000
     n = 5000
